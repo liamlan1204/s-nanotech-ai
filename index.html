@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>PolishPro AI – High Gloss Tool Assistant</title>
+  <meta charset="UTF-8" />
+  <title>PolishPro AI - High Gloss Tool Assistant</title>
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <style>
     body {
@@ -19,19 +19,24 @@
       max-width: 600px;
       margin: auto;
     }
-    button {
-      padding: 12px 24px;
-      background-color: #7b2cbf;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
+    h1 {
+      color: #333;
     }
-    #response {
+    p {
+      color: #666;
+    }
+    #loginBtn {
+      background-color: #8e44ad;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
       margin-top: 20px;
-      font-weight: bold;
-      color: green;
+    }
+    #loginBtn:hover {
+      background-color: #732d91;
     }
   </style>
 </head>
@@ -39,34 +44,21 @@
   <div class="container">
     <h1>PolishPro AI</h1>
     <p>AI-powered assistant for high-gloss polishing professionals.</p>
-    <button onclick="loginWithPi()">Login with Pi</button>
-
-    <div id="response"></div>
+    <button id="loginBtn">Login with Pi</button>
   </div>
 
   <script>
-    // Inicijalizacija Pi SDK
-    const scopes = ['username', 'payments'];
-    const onIncompletePaymentFound = (payment) => {
-      console.log('Incomplete payment found', payment);
-    };
-
-    Pi.init({ version: "2.0", sandbox: true }); // za Testnet
-
-    function loginWithPi() {
-      Pi.authenticate(scopes, onIncompletePaymentFound).then(function(auth) {
-        document.getElementById("response").innerHTML =
-          "Welcome, " + auth.user.username + "!<br>Processing your demo payment...";
-
-        // Simulacija Pi plaćanja – u pravoj verziji bi ovdje bila funkcija Pi.createPayment()
-        setTimeout(() => {
-          document.getElementById("response").innerHTML += "<br>✔ Access granted. AI assistant ready.";
-        }, 2000);
-      }).catch(function(error) {
-        console.error(error);
-        alert("Authentication failed.");
-      });
-    }
+    document.getElementById("loginBtn").addEventListener("click", function () {
+      if (window.Pi) {
+        window.Pi.authenticate(['username'], function (auth) {
+          console.log('Authenticated user:', auth);
+          alert('Welcome, ' + auth.user.username + '!');
+          // Tu možeš dodati poziv na svoj backend ako želiš monetizaciju itd.
+        });
+      } else {
+        alert("Pi SDK not loaded. Please try again.");
+      }
+    });
   </script>
 </body>
 </html>
