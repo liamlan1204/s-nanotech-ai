@@ -13,6 +13,7 @@
   <button onclick="loginWithPi()">Login with Pi</button>
 
   <script>
+  Pi.init({ version: "2.0", sandbox: true });
     async function loginWithPi() {
       try {
         const scopes = ['username', 'payments'];
