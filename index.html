@@ -4,19 +4,27 @@
   <meta charset="UTF-8">
   <title>PolishPro AI</title>
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', function () {
+      Pi.init({
+        version: "2.0",
+        sandbox: true, // koristi testnet
+        onIncompletePaymentFound: function(payment) {
+          console.log('Incomplete payment found:', payment);
+        }
+      });
+    });
+  </script>
 </head>
 <body>
-
   <h1>Welcome to PolishPro AI</h1>
   <p>Login with Pi Network to access high-gloss polishing tools and insights.</p>
-
   <button onclick="loginWithPi()">Login with Pi</button>
 
   <script>
-  Pi.init({ version: "2.0", sandbox: true });
     async function loginWithPi() {
       try {
-        const scopes = ['username', 'payments'];
+        const scopes = ['username'];
         const authResult = await window.Pi.authenticate(scopes);
         alert("Welcome, " + authResult.user.username);
         console.log("User info:", authResult.user);
@@ -27,6 +35,5 @@
       }
     }
   </script>
-
 </body>
 </html>
